@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SafePath - Project Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&family=Noto+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="foundations.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans', var(--font-family-sans), sans-serif;
+            background: #EDEEF3;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 24px;
+            color: #292C33;
+        }
+        .page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+            max-width: 1152px;
+            width: 100%;
+        }
+        .board-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            width: 100%;
+        }
+        .project-logo {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 60px;
+            background: #2C9B48;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 24px;
+            overflow: hidden;
+        }
+        .project-logo img { width: 100%; height: 100%; object-fit: contain; }
+        .project-logo-placeholder { color: #fff; }
+        .board-header h1 {
+            font-family: 'Fira Code', monospace;
+            font-weight: 400;
+            font-size: 32px;
+            line-height: 36px;
+            text-align: center;
+            color: #292C33;
+        }
+        .welcome {
+            font-family: 'Noto Sans', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: center;
+            color: #292C33;
+        }
+        .description {
+            font-family: 'Noto Sans', sans-serif;
+            font-size: 16px;
+            line-height: 22px;
+            text-align: center;
+            color: #292C33;
+            max-width: 666px;
+        }
+        .panel-label {
+            font-family: 'Fira Code', monospace;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 24px;
+            color: #292C33;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 8px;
+        }
+        .panel {
+            width: 100%;
+            max-width: 1152px;
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            border: 1px solid #DADEE6;
+        }
+        .frontend-panel-text { color: #6b7280; font-size: 16px; line-height: 22px; margin-bottom: 16px; }
+        .frontend-buttons { display: flex; flex-wrap: wrap; gap: 12px; }
+        .backend-intro { font-family: 'Noto Sans', sans-serif; font-size: 16px; line-height: 22px; color: #292C33; margin-bottom: 16px; }
+        .api-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; }
+        .api-table th { padding: 0.75rem; text-align: left; border-bottom: 2px solid #e2e8f0; background: #f1f5f9; font-family: 'Noto Sans', sans-serif; font-size: 16px; color: #292C33; }
+        .api-table td { padding: 0.75rem; border-bottom: 1px solid #e2e8f0; font-family: 'Noto Sans', sans-serif; font-size: 16px; color: #000; }
+        .btn-test-api {
+            display: inline-flex; align-items: center; justify-content: center;
+            padding: 6px 16px; min-height: 34px; background: #3D76FF; color: #FFFFFF;
+            font-family: 'Noto Sans', sans-serif; font-weight: 400; font-size: 16px; line-height: 22px;
+            border: none; border-radius: 20px; cursor: pointer;
+        }
+        .btn-test-api:disabled { background: #CED3DE; color: #000000; cursor: not-allowed; }
+        .api-result.success { color: #08957E; font-weight: 700; font-size: 16px; line-height: 22px; }
+        .footer {
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid #DADEE6;
+            color: #292C33;
+            font-size: 14px;
+        }
+        @media (max-width: 600px) {
+            .board-header h1 { font-size: 24px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+        <header class="board-header">
+            <div class="project-logo"><img src="data:image/png;base64,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" alt="Organization" class="project-logo-img" /></div>
+            <h1>SafePath</h1>
+            <p class="welcome">Welcome to your project's default landing page!</p>
+            <p class="description">This page is hosted on GitHub Pages and is ready to showcase your project to the world. As you develop your prototype, this page will evolve into your final product presentation.</p>
+        </header>
+
+        <h2 class="panel-label">Frontend</h2>
+        <div class="panel">
+            <p class="frontend-panel-text">As you progress through the project, add buttons to this panel. Each button should link to one of the project's modules. Later in the project, you'll be asked to replace this default landing page with the final product's landing page (don't worry :) we'll guide you when it's time.)</p>
+            <div class="frontend-buttons"></div>
+        </div>
+
+        <h2 class="panel-label">Backend</h2>
+        <div class="panel">
+            <p class="backend-intro">The following APIs are pre-configured, free to use, and already included in your default repository, so you can start using them right away.</p>
+            <table class="api-table">
+            <thead>
+                <tr>
+                    <th>API Name</th>
+                    <th>API Description</th>
+                    <th style="text-align: center;">Test</th>
+                    <th>Response</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Database Connectivity</strong></td>
+                    <td>REST API and database connectivity (TestProjects CRUD).</td>
+                    <td style="text-align: center;"><button id="testButton" type="button" onclick="testBackend()" class="btn-test-api">Test API</button></td>
+                    <td style="min-width: 120px;"><span id="response"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Google Geocoding API</strong></td>
+                    <td>Convert addresses to coordinates (and reverse).</td>
+                    <td style="text-align: center;"><button type="button" onclick="testGoogleApi('geocoding')" class="btn-test-api">Test API</button></td>
+                    <td style="min-width: 120px;"><span id="geocodingResponse" class="api-result"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Google Maps JavaScript API</strong></td>
+                    <td>Display maps in the browser. Test validates Maps JavaScript API.</td>
+                    <td style="text-align: center;"><button type="button" onclick="testGoogleApi('maps')" class="btn-test-api">Test API</button></td>
+                    <td style="min-width: 120px;"><span id="mapsResponse" class="api-result"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Google Places API (New)</strong></td>
+                    <td>Search places and get place details.</td>
+                    <td style="text-align: center;"><button type="button" onclick="testGoogleApi('places')" class="btn-test-api">Test API</button></td>
+                    <td style="min-width: 120px;"><span id="placesResponse" class="api-result"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Google Directions API</strong></td>
+                    <td>Routes and directions between addresses.</td>
+                    <td style="text-align: center;"><button type="button" onclick="testGoogleApi('directions')" class="btn-test-api">Test API</button></td>
+                    <td style="min-width: 120px;"><span id="directionsResponse" class="api-result"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Google Gemini API</strong></td>
+                    <td>Generative AI (LLM).</td>
+                    <td style="text-align: center;"><button type="button" onclick="testGoogleApi('gemini')" class="btn-test-api">Test API</button></td>
+                    <td style="min-width: 120px;"><span id="geminiResponse" class="api-result"></span></td>
+                </tr>
+                <tr>
+                    <td><strong>Google Cloud Speech-to-Text API</strong></td>
+                    <td>Speech recognition (audio to text).</td>
+                    <td style="text-align: center;"><button type="button" onclick="testGoogleApi('speech-to-text')" class="btn-test-api">Test API</button></td>
+                    <td style="min-width: 120px;"><span id="speechResponse" class="api-result"></span></td>
+                </tr>
+            </tbody>
+            </table>
+            <div class="footer">
+                <p>This page will be automatically replaced when you push your project files.<br><strong>Happy coding! 🎉</strong></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Load config.js and ensure it's available
+        let configLoaded = false;
+        const configScript = document.createElement('script');
+        configScript.src = 'config.js';
+        configScript.onload = function() {
+            configLoaded = true;
+            console.log('✅ config.js loaded successfully');
+            console.log('📋 CONFIG:', typeof CONFIG !== 'undefined' ? CONFIG : 'CONFIG not defined');
+            console.log('📋 window.CONFIG:', typeof window !== 'undefined' && window.CONFIG ? window.CONFIG : 'window.CONFIG not defined');
+        };
+        configScript.onerror = function() {
+            console.error('❌ Failed to load config.js');
+            configLoaded = false;
+        };
+        document.head.appendChild(configScript);
+    </script>
+    <script>
+        // Debug: Log config on load
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('📋 Config loaded:', typeof CONFIG !== 'undefined' ? CONFIG : 'CONFIG not defined');
+            console.log('📋 window.CONFIG:', typeof window !== 'undefined' && window.CONFIG ? window.CONFIG : 'window.CONFIG not defined');
+            console.log('📋 API_URL from config:', typeof CONFIG !== 'undefined' ? CONFIG?.API_URL : (window.CONFIG?.API_URL || 'not found'));
+        });
+        
+        async function testBackend() {
+            const button = document.getElementById('testButton');
+            const responseDiv = document.getElementById('response');
+            
+            button.disabled = true;
+            button.textContent = 'Loading...';
+            responseDiv.className = '';
+            responseDiv.textContent = '';
+            
+            try {
+                // Wait a moment for config.js to load if it hasn't yet
+                if (!configLoaded) {
+                    await new Promise(resolve => setTimeout(resolve, 100));
+                }
+                
+                // Try multiple ways to access CONFIG (handle scope issues)
+                let config = typeof CONFIG !== 'undefined' ? CONFIG : (typeof window !== 'undefined' && window.CONFIG ? window.CONFIG : null);
+                let apiUrl = config?.API_URL || '';
+                
+                console.log('🔍 CONFIG object:', config);
+                console.log('🔍 Original API_URL from config:', apiUrl);
+                console.log('🔍 typeof CONFIG:', typeof CONFIG);
+                console.log('🔍 window.CONFIG:', typeof window !== 'undefined' ? window.CONFIG : 'window not available');
+                console.log('🔍 configLoaded flag:', configLoaded);
+                
+                if (!apiUrl) {
+                    const errorMsg = 'API URL not configured in config.js. ' +
+                        'CONFIG object: ' + JSON.stringify(config) + 
+                        ', window.CONFIG: ' + JSON.stringify(typeof window !== 'undefined' ? window.CONFIG : 'N/A') +
+                        ', configLoaded: ' + configLoaded;
+                    throw new Error(errorMsg);
+                }
+                
+                // Ensure HTTPS for Railway domains (fix Mixed Content errors)
+                if (apiUrl.includes('railway.app')) {
+                    if (apiUrl.startsWith('http://')) {
+                        apiUrl = apiUrl.replace('http://', 'https://');
+                        console.warn('⚠️ Converted HTTP to HTTPS for Railway domain');
+                    }
+                    if (!apiUrl.startsWith('https://')) {
+                        apiUrl = 'https://' + apiUrl.replace(/^https?:\/\//, '');
+                        console.warn('⚠️ Added HTTPS protocol to Railway domain');
+                    }
+                }
+                
+                // Remove trailing slash from base URL if present
+                apiUrl = apiUrl.replace(/\/$/, '');
+                console.log('✅ Final API_URL (after normalization):', apiUrl);
+                
+                // Add trailing slash to prevent Railway redirect (Railway redirects /api/test to /api/test/)
+                // This prevents Railway from redirecting HTTPS to HTTP
+                const fullUrl = apiUrl + '/api/test/';
+                console.log('🌐 Attempting to fetch:', fullUrl);
+                console.log('🌐 Full URL type check:', typeof fullUrl, 'Starts with https?:', fullUrl.startsWith('https://'));
+                
+                // Check if URL is a Railway project URL (not a service URL)
+                if (apiUrl.includes('railway.app/project/')) {
+                    responseDiv.className = 'error';
+                    responseDiv.innerHTML = `
+                        <strong>❌ Configuration Error:</strong><br>
+                        <strong>The API URL is pointing to a Railway project page, not a service URL.</strong><br><br>
+                        <strong>Current URL:</strong> <code>${apiUrl}</code><br><br>
+                        <strong>Issue:</strong><br>
+                        Railway project pages (<code>railway.app/project/...</code>) are not API endpoints.<br>
+                        Your backend service needs to be deployed first to get a real API URL.<br><br>
+                        <strong>Solution:</strong><br>
+                        1. Deploy your backend code to Railway (push to GitHub and connect to Railway)<br>
+                        2. After deployment, Railway will generate a service URL like: <code>https://your-service-name.railway.app</code><br>
+                        3. Update <code>config.js</code> with the actual service URL<br>
+                        4. The service URL can be found in Railway dashboard: Service → Settings → Domains<br><br>
+                        <strong>Note:</strong> The backend code already includes CORS configuration, so once deployed with the correct URL, it will work.
+                    `;
+                    console.error('Invalid API URL (Railway project URL):', apiUrl);
+                    return;
+                }
+                
+                // Final validation - ensure URL is definitely HTTPS
+                if (!fullUrl.startsWith('https://')) {
+                    throw new Error('❌ CRITICAL: URL is not HTTPS! URL: ' + fullUrl);
+                }
+                
+                let response;
+                try {
+                    // Use fetch with explicit options
+                    console.log('📡 Making fetch request with explicit options...');
+                    console.log('📡 Full URL before fetch (stringified):', String(fullUrl));
+                    console.log('📡 Full URL type:', typeof fullUrl);
+                    console.log('📡 Full URL startsWith https?:', String(fullUrl).startsWith('https://'));
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                    
+                    // Create URL object to ensure it's valid and has correct protocol
+                    const urlObj = new URL(fullUrl);
+                    console.log('📡 URL object protocol:', urlObj.protocol);
+                    console.log('📡 URL object href:', urlObj.href);
+                    
+                    // Force HTTPS protocol
+                    if (urlObj.protocol !== 'https:') {
+                        urlObj.protocol = 'https:';
+                        console.warn('⚠️ FORCED protocol to HTTPS:', urlObj.href);
+                    }
+                    
+                    const finalFetchUrl = urlObj.href;
+                    console.log('📡 Final fetch URL:', finalFetchUrl);
+                    
+                    response = await fetch(finalFetchUrl, {
+                        method: 'GET',
+                        mode: 'cors',
+                        credentials: 'omit',
+                        redirect: 'error', // Fail on redirect to catch HTTPS->HTTP redirects
+                        signal: controller.signal,
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    clearTimeout(timeoutId);
+                    console.log('✅ Fetch completed, status:', response.status, 'Final URL:', response.url);
+                } catch (fetchError) {
+                    // Network error - check if it's a CORS error or connection error
+                    const isCorsError = fetchError.message.includes('CORS') || 
+                                       (fetchError.name === 'TypeError' && fetchError.message.includes('Failed to fetch'));
+                    
+                    let errorDetails = '';
+                    if (isCorsError) {
+                        errorDetails = `
+                            <strong>❌ CORS Error:</strong><br>
+                            <strong>The API server is not allowing requests from this origin.</strong><br><br>
+                            <strong>Details:</strong><br>
+                            • URL: <code>${fullUrl}</code><br>
+                            • Origin: <code>${window.location.origin}</code><br>
+                            • Error: ${fetchError.message}<br><br>
+                            <strong>Possible causes:</strong><br>
+                            • Backend CORS is not configured correctly<br>
+                            • Service is not deployed or offline<br>
+                            • Wrong API URL (might be pointing to project page instead of service)<br><br>
+                            <strong>Note:</strong> If your backend is deployed, make sure CORS allows your GitHub Pages domain.<br>
+                        `;
+                    } else {
+                        errorDetails = `
+                            <strong>❌ Connection Error:</strong><br>
+                            <strong>Cannot connect to the API server</strong><br><br>
+                            <strong>Details:</strong><br>
+                            • URL: <code>${fullUrl}</code><br>
+                            • Error: ${fetchError.message}<br><br>
+                            <strong>Possible causes:</strong><br>
+                            • Railway service is not deployed yet<br>
+                            • Service is offline or crashed<br>
+                            • Network connectivity problem<br>
+                            • Wrong API URL<br><br>
+                            <strong>Next steps:</strong><br>
+                            1. Check Railway dashboard - is the service deployed?<br>
+                            2. Check service logs in Railway<br>
+                            3. Verify the API URL in config.js is the service URL (not project URL)<br>
+                            4. Service URL should be like: <code>https://your-service-name.railway.app</code><br>
+                        `;
+                    }
+                    
+                    responseDiv.className = 'error';
+                    responseDiv.innerHTML = errorDetails;
+                    console.error('Fetch error:', fetchError);
+                    return;
+                }
+                
+                console.log('Response status:', response.status, response.statusText);
+                
+                if (response.ok) {
+                    responseDiv.className = 'api-result success';
+                    responseDiv.innerHTML = '<span style="color: #08957E; font-weight: 700;">Successful</span>';
+                } else {
+                    // HTTP error response
+                    let errorText = '';
+                    try {
+                        errorText = await response.text();
+                    } catch (e) {
+                        errorText = 'Could not read error response';
+                    }
+                    
+                    responseDiv.className = 'error';
+                    responseDiv.innerHTML = `
+                        <strong>❌ API Error:</strong><br>
+                        <strong>HTTP Status: ${response.status} ${response.statusText}</strong><br><br>
+                        <strong>URL:</strong> <code>${fullUrl}</code><br>
+                        <strong>Response:</strong> <pre>${errorText.substring(0, 200)}</pre>
+                    `;
+                    console.error('API error:', response.status, errorText);
+                }
+            } catch (error) {
+                responseDiv.className = 'error';
+                responseDiv.innerHTML = `
+                    <strong>❌ Unexpected Error:</strong><br>
+                    <strong>${error.name || 'Error'}:</strong> ${error.message}<br><br>
+                    <strong>Stack trace:</strong><br>
+                    <pre style="font-size: 10px; max-height: 200px; overflow: auto;">${error.stack || 'No stack trace available'}</pre>
+                `;
+                console.error('Unexpected error:', error);
+            } finally {
+                button.disabled = false;
+                button.textContent = 'Test API';
+            }
+        }
+        
+        async function testGoogleApi(apiSlug) {
+            const idMap = { geocoding: 'geocodingResponse', maps: 'mapsResponse', places: 'placesResponse', directions: 'directionsResponse', gemini: 'geminiResponse', 'speech-to-text': 'speechResponse' };
+            const div = document.getElementById(idMap[apiSlug]);
+            if (!div) return;
+            div.className = 'api-result';
+            div.textContent = 'Loading...';
+            try {
+                if (!configLoaded) await new Promise(r => setTimeout(r, 100));
+                let config = typeof CONFIG !== 'undefined' ? CONFIG : (typeof window !== 'undefined' && window.CONFIG ? window.CONFIG : null);
+                let apiUrl = config?.API_URL || '';
+                if (!apiUrl) {
+                    div.className = 'api-result error';
+                    div.innerHTML = '<span class="error">API URL not configured.</span>';
+                    return;
+                }
+                apiUrl = apiUrl.replace(/\/$/, '');
+                if (apiUrl.includes('railway.app') && apiUrl.startsWith('http://')) apiUrl = apiUrl.replace('http://', 'https://');
+                const url = apiUrl + '/api/google/' + apiSlug;
+                const res = await fetch(url, { method: 'GET', mode: 'cors', credentials: 'omit', headers: { 'Accept': 'application/json' }});
+                const data = await res.json();
+                if (data.status === 'ok') {
+                    div.className = 'api-result success';
+                    div.innerHTML = '<span style="color: #08957E; font-weight: 700;">Successful</span>';
+                } else {
+                    div.className = 'api-result error';
+                    div.innerHTML = '<span class="error">' + (data.message || data.status || 'Failed') + '</span>';
+                }
+            } catch (error) {
+                div.className = 'api-result error';
+                div.innerHTML = '<span class="error">' + (error.message || error) + '</span>';
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</body>
+</html>
